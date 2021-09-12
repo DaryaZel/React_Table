@@ -7,7 +7,8 @@ import { AdditionalInformation } from './AdditionalInformation'
 import { Selector } from './Selector'
 function App() {
   const [users, setUsers] = useState([])
-  const [searchValue, setSearchValue] = useState({ stateValue: '', filterValue: '' })
+  const [searchValue, setSearchValue] = useState('')
+  const [selectedState, setSelectedState] = useState(null)
   const [currentPageNumber, setCurrentPageNumber] = useState(1)
   const [pageSize] = useState(10)
   const [addInformation, setAddInformation] = useState(null)
@@ -19,19 +20,18 @@ function App() {
   }, []);
   const lastUserIndex = currentPageNumber * pageSize
   const firstUserIndex = lastUserIndex - pageSize
-  const filteredUsers = search(users, searchValue)
+  const filteredUsers = search(users, { searchValue, selectedState })
   const currentUsersArray = filteredUsers.slice(firstUserIndex, lastUserIndex)
   const changePage = pageNumber => setCurrentPageNumber(pageNumber)
-  const changeSearchValue = searchValue => setSearchValue(searchValue)
-  const prevPage = () => setCurrentPageNumber(prev => prev - 1)
-  const nextPage = () => setCurrentPageNumber(prev => prev + 1)
+  const prevPage = () => currentPageNumber != 1 ? setCurrentPageNumber(prev => prev - 1) : undefined
+  const nextPage = () => currentPageNumber != Math.ceil(filteredUsers.length / pageSize) ? setCurrentPageNumber(prev => prev + 1) : undefined
   const getInformation = information => setAddInformation(information)
   return (
     <div className='main-container'>
       <div>
-        <input value={searchValue.filterValue} onChange={(e) => setSearchValue({ stateValue: '', filterValue: e.target.value })}></input>
+        <input value={searchValue} onChange={(e) => setSearchValue(e.target.value)}></input>
       </div>
-      <Selector users={users} changeSearchValue={changeSearchValue} />
+      <Selector users={users} changeSelectedState={setSelectedState} />
       <Table users={currentUsersArray} getInformation={getInformation} />
       <Pagination
         pageSize={pageSize}

@@ -16,7 +16,7 @@ export function Pagination({ pageSize, totalUsersAmount, changePage, nextPage, p
                     </li>
             ))
             }
-            <button onClick={() => nextPage()}>Next</button>
+            <button onClick={() =>  nextPage()}>Next</button>
         </div>
     )
 }
