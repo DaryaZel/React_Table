@@ -5,6 +5,7 @@ export function Selector({ users, changeSelectedState }) {
             statesArray.push(users[i].adress.state)
         }
     }
+
     return (
         <select name="select" onChange={(e) => changeSelectedState(e.target.value)} >
             {

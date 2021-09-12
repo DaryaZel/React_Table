@@ -1,6 +1,5 @@
 import { useState, useMemo } from 'react';
-import arrow from './down-arrow.png';
-import { AdditionalInformation } from './AdditionalInformation'
+import arrow from '../images/down-arrow.png';
 export function Table({ users, getInformation }) {
 
     const useSortableData = (items, startSortValue = null) => {

@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Table } from './Table'
 import { Pagination } from './Pagination'
-import './App.css';
 import { search } from './Search'
 import { AdditionalInformation } from './AdditionalInformation'
 import { Selector } from './Selector'
+import '../css/App.css'
+
 function App() {
   const [users, setUsers] = useState([])
   const [searchValue, setSearchValue] = useState('')
