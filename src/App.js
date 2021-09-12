@@ -19,10 +19,10 @@ function App() {
   }, []);
   const lastUserIndex = currentPageNumber * pageSize
   const firstUserIndex = lastUserIndex - pageSize
-  const currentUsersArray = users.slice(firstUserIndex, lastUserIndex)
+  const filteredUsers = search(users, searchValue)
+  const currentUsersArray = filteredUsers.slice(firstUserIndex, lastUserIndex)
   const changePage = pageNumber => setCurrentPageNumber(pageNumber)
   const changeSearchValue = searchValue => setSearchValue(searchValue)
-  const changeUsersArray = newUsersArray => setUsers(newUsersArray)
   const prevPage = () => setCurrentPageNumber(prev => prev - 1)
   const nextPage = () => setCurrentPageNumber(prev => prev + 1)
   const getInformation = information => setAddInformation(information)
@@ -31,11 +31,11 @@ function App() {
       <div>
         <input value={searchValue.filterValue} onChange={(e) => setSearchValue({ stateValue: '', filterValue: e.target.value })}></input>
       </div>
-      <Selector users={currentUsersArray} changeSearchValue={changeSearchValue} />
-      <Table users={search(currentUsersArray, searchValue)} getInformation={getInformation} />
+      <Selector users={users} changeSearchValue={changeSearchValue} />
+      <Table users={currentUsersArray} getInformation={getInformation} />
       <Pagination
         pageSize={pageSize}
-        totalUsersAmount={users.length}
+        totalUsersAmount={filteredUsers.length}
         changePage={changePage}
         nextPage={nextPage}
         prevPage={prevPage}
