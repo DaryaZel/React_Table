@@ -29,10 +29,10 @@ function App() {
   const getInformation = information => setAddInformation(information)
   return (
     <div className='main-container'>
-      <div>
-        <input value={searchValue} onChange={(e) => setSearchValue(e.target.value)}></input>
-      </div>
+      <div className='filters-container'>
+        <input className='filters-input' placeholder = 'Search by name' value={searchValue} onChange={(e) => setSearchValue(e.target.value)}></input>
       <Selector users={users} changeSelectedState={setSelectedState} />
+      </div>
       <Table users={currentUsersArray} getInformation={getInformation} />
       <Pagination
         pageSize={pageSize}

@@ -1,7 +1,7 @@
 export function AdditionalInformation({ information }) {
 
     return (
-        <div>
+        <div className='additionalInformation-container'>
             <div>Profile info:</div>
             <div>Selected profile: {information.firstName} {information.lastName}</div>
             <div>Description: {information.description}</div>

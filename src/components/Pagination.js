@@ -4,20 +4,20 @@ export function Pagination({ pageSize, totalUsersAmount, changePage, nextPage, p
         pageNumbers.push(i)
     }
     const getClassNamesFor = (number) => {
-        return currentPageNumber === number ? `pageList_item currentPage` : 'pageList_item';
+        return currentPageNumber === number ? `pagination-pageList_item currentPage` : 'pagination-pageList_item';
     };
 
     return (
-        <div className='pageListContainer'>
-            <button onClick={() => prevPage()}>Previous</button>
-            <ul className='pageList'></ul>
+        <div className='pagination-container'>
+            <button className='pagination-button' onClick={() => prevPage()}>Previous</button>
+            <ul className='pagination-pageList'></ul>
             {pageNumbers.map(number => (
                 <li key={number} className={getClassNamesFor(number)} onClick={() => changePage(number)} >
                     {number}
                 </li>
             ))
             }
-            <button onClick={() => nextPage()}>Next</button>
+            <button className='pagination-button' onClick={() => nextPage()}>Next</button>
         </div>
     )
 }
