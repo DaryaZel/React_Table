@@ -9,13 +9,24 @@ export function Table({ users, getInformation }) {
             let itemsForSorting = items;
             if (sortValue !== null) {
                 itemsForSorting.sort((a, b) => {
+                    if(sortValue.key=='state') {
+                        if (a.adress[sortValue.key] < b.adress[sortValue.key]) {
+                            return sortValue.direction === 'ascending' ? -1 : 1;
+                        }
+                        if (a.adress[sortValue.key] > b.adress[sortValue.key]) {
+                            return sortValue.direction === 'ascending' ? 1 : -1;
+                        }
+                        return 0;
+
+                    }
+                    else{
                     if (a[sortValue.key] < b[sortValue.key]) {
                         return sortValue.direction === 'ascending' ? -1 : 1;
                     }
                     if (a[sortValue.key] > b[sortValue.key]) {
                         return sortValue.direction === 'ascending' ? 1 : -1;
                     }
-                    return 0;
+                    return 0;}
                 });
             }
             return itemsForSorting;
@@ -67,7 +78,7 @@ export function Table({ users, getInformation }) {
                             <span>Phone</span>
                             <img alt='arrow' className={getClassNamesFor('phone')} src={arrow} />
                         </th>
-                        <th onClick={() => sortRequest('adress.state')}>
+                        <th onClick={() => sortRequest('state')}>
                             <span>State</span>
                             <img alt='arrow' className={getClassNamesFor('adress.state')} src={arrow} />
                         </th>
