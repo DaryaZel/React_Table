@@ -82,7 +82,7 @@ export function Table({ users, getInformation }) {
                         </th>
                         <th onClick={() => sortRequest('state')}>
                             <span>State</span>
-                            <img alt='arrow' className={getClassNamesFor('adress.state')} src={arrow} />
+                            <img alt='arrow' className={getClassNamesFor('state')} src={arrow} />
                         </th>
                     </tr>
                 </thead>
