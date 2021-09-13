@@ -9,8 +9,8 @@ export function Selector({ users, changeSelectedState }) {
     return (
         <select className='filters-button' name="select" onChange={(e) => changeSelectedState(e.target.value)} >
             {
-                statesArray.map(state => (
-                    <option value={state} >{state}</option>
+                statesArray.map((state, index) => (
+                    <option key={state + index} value={state} >{state}</option>
                 ))
             }
         </select>

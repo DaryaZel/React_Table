@@ -10,13 +10,14 @@ export function Pagination({ pageSize, totalUsersAmount, changePage, nextPage, p
     return (
         <div className='pagination-container'>
             <button className='pagination-button' onClick={() => prevPage()}>Previous</button>
-            <ul className='pagination-pageList'></ul>
+            <ul className='pagination-pageList'>
             {pageNumbers.map(number => (
                 <li key={number} className={getClassNamesFor(number)} onClick={() => changePage(number)} >
                     {number}
                 </li>
             ))
             }
+            </ul>
             <button className='pagination-button' onClick={() => nextPage()}>Next</button>
         </div>
     )

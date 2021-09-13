@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import arrow from '../images/down-arrow.png';
+
 export function Table({ users, getInformation }) {
 
     const useSortableData = (items, startSortValue = null) => {
@@ -87,7 +88,7 @@ export function Table({ users, getInformation }) {
                 </thead>
                 <tbody>
                     {items.map((user) => (
-                        <tr key={user.id + user.name} onClick={() => getInformation(user)}>
+                        <tr key={rowKeyForUser(user)} onClick={() => getInformation(user)}>
                             <td>{user.id}</td>
                             <td>{user.firstName}</td>
                             <td>{user.lastName}</td>
@@ -100,4 +101,8 @@ export function Table({ users, getInformation }) {
             </table>
         </div>
     )
+}
+
+function rowKeyForUser(user) {
+    return String(user.id) + user.firstName + user.lastName;
 }

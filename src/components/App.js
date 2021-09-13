@@ -11,7 +11,7 @@ function App() {
   const [searchValue, setSearchValue] = useState('')
   const [selectedState, setSelectedState] = useState(null)
   const [currentPageNumber, setCurrentPageNumber] = useState(1)
-  const [pageSize] = useState(10)
+  const [pageSize] = useState(20)
   const [addInformation, setAddInformation] = useState(null)
 
   useEffect(async () => {
