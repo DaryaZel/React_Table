@@ -4,6 +4,7 @@ import { Pagination } from './Pagination'
 import { search } from './Search'
 import { AdditionalInformation } from './AdditionalInformation'
 import { Selector } from './Selector'
+import { sort } from './Sort'
 import '../css/App.css'
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
   const [searchValue, setSearchValue] = useState('')
   const [selectedState, setSelectedState] = useState(null)
   const [currentPageNumber, setCurrentPageNumber] = useState(1)
+  const [sortValue, setSortValue] = useState({ key: null, direction: null })
   const [pageSize] = useState(20)
   const [addInformation, setAddInformation] = useState(null)
 
@@ -22,7 +24,8 @@ function App() {
   const lastUserIndex = currentPageNumber * pageSize
   const firstUserIndex = lastUserIndex - pageSize
   const filteredUsers = search(users, { searchValue, selectedState })
-  const currentUsersArray = filteredUsers.slice(firstUserIndex, lastUserIndex)
+  const sortedUsers = sort(filteredUsers, sortValue)
+  const currentUsersArray = sortedUsers.slice(firstUserIndex, lastUserIndex)
   const changePage = pageNumber => setCurrentPageNumber(pageNumber)
   const prevPage = () => currentPageNumber != 1 ? setCurrentPageNumber(prev => prev - 1) : undefined
   const nextPage = () => currentPageNumber != Math.ceil(filteredUsers.length / pageSize) ? setCurrentPageNumber(prev => prev + 1) : undefined
@@ -30,10 +33,14 @@ function App() {
   return (
     <div className='main-container'>
       <div className='filters-container'>
-        <input className='filters-input' placeholder = 'Search by name' value={searchValue} onChange={(e) => setSearchValue(e.target.value)}></input>
-      <Selector users={users} changeSelectedState={setSelectedState} />
+        <input className='filters-input' placeholder='Search by name' value={searchValue} onChange={(e) => setSearchValue(e.target.value)}></input>
+        <Selector users={users} changeSelectedState={setSelectedState} />
       </div>
-      <Table users={currentUsersArray} getInformation={getInformation} />
+      <Table
+        users={currentUsersArray}
+        getInformation={getInformation}
+        sortValue={sortValue}
+        changeSortValue={setSortValue} />
       <Pagination
         pageSize={pageSize}
         totalUsersAmount={filteredUsers.length}

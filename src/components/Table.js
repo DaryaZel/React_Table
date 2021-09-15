@@ -1,93 +1,48 @@
 import { useState, useMemo } from 'react';
 import arrow from '../images/down-arrow.png';
 
-export function Table({ users, getInformation }) {
+export function Table({ users, getInformation, sortValue, changeSortValue }) {
 
-    const useSortableData = (items, startSortValue = null) => {
-        const [sortValue, setSortValue] = useState(startSortValue);
-
-        const sortedItems = useMemo(() => {
-            let itemsForSorting = items;
-            if (sortValue !== null) {
-                itemsForSorting.sort((a, b) => {
-                    if (sortValue.key == 'state') {
-                        if (a.adress[sortValue.key] < b.adress[sortValue.key]) {
-                            return sortValue.direction === 'ascending' ? -1 : 1;
-                        }
-                        if (a.adress[sortValue.key] > b.adress[sortValue.key]) {
-                            return sortValue.direction === 'ascending' ? 1 : -1;
-                        }
-                        return 0;
-
-                    }
-                    else {
-                        if (a[sortValue.key] < b[sortValue.key]) {
-                            return sortValue.direction === 'ascending' ? -1 : 1;
-                        }
-                        if (a[sortValue.key] > b[sortValue.key]) {
-                            return sortValue.direction === 'ascending' ? 1 : -1;
-                        }
-                        return 0;
-                    }
-                });
-            }
-            return itemsForSorting;
-        }, [items, sortValue]);
-
-        const sortRequest = (key) => {
-            let direction = 'ascending';
-            if (
-                sortValue &&
-                sortValue.key === key &&
-                sortValue.direction === 'ascending'
-            ) {
-                direction = 'descending';
-            }
-            setSortValue({ key, direction });
-        };
-
-        return { items: sortedItems, sortRequest, sortValue };
-    };
-    const { items, sortRequest, sortValue } = useSortableData(users);
     const getClassNamesFor = (name) => {
         if (!sortValue) {
             return 'App-table_arrow';
         }
         return sortValue.key === name ? `App-table_arrow ${sortValue.direction}` : 'App-table_arrow';
+
     };
     return (
         <div className='table-container'>
             <table className='App-table'>
                 <thead>
                     <tr>
-                        <th onClick={() => sortRequest('id')}>
+                        <th onClick={() => changeSortValue({ key: 'id', direction: sortValue.key === 'id' && sortValue.direction === 'ascending' ? 'descending' : 'ascending' })}>
                             <span>ID</span>
                             <img alt='arrow' className={getClassNamesFor('id')} src={arrow} />
                         </th>
-                        <th onClick={() => sortRequest('firstName')}>
+                        <th onClick={() => changeSortValue({ key: 'firstName', direction: sortValue.key === 'firstName' && sortValue.direction === 'ascending' ? 'descending' : 'ascending' })}>
                             <span>First Name</span>
                             <img alt='arrow' className={getClassNamesFor('firstName')} src={arrow} />
                         </th>
-                        <th onClick={() => sortRequest('lastName')}>
+                        <th onClick={() => changeSortValue({ key: 'lastName', direction: sortValue.key === 'lastName' && sortValue.direction === 'ascending' ? 'descending' : 'ascending' })}>
                             <span>Last Name</span>
                             <img alt='arrow' className={getClassNamesFor('lastName')} src={arrow} />
                         </th>
-                        <th onClick={() => sortRequest('email')}>
+                        <th onClick={() => changeSortValue({ key: 'email', direction: sortValue.key === 'email' && sortValue.direction === 'ascending' ? 'descending' : 'ascending' })}>
                             <span>Email</span>
                             <img alt='arrow' className={getClassNamesFor('email')} src={arrow} />
                         </th>
-                        <th onClick={() => sortRequest('phone')}>
+                        <th onClick={() => changeSortValue({ key: 'phone', direction: sortValue.key === 'phone' && sortValue.direction === 'ascending' ? 'descending' : 'ascending' })}>
                             <span>Phone</span>
                             <img alt='arrow' className={getClassNamesFor('phone')} src={arrow} />
                         </th>
-                        <th onClick={() => sortRequest('state')}>
+                        <th onClick={() => changeSortValue({ key: 'state', direction: sortValue.key === 'state' && sortValue.direction === 'ascending' ? 'descending' : 'ascending' })}>
                             <span>State</span>
                             <img alt='arrow' className={getClassNamesFor('state')} src={arrow} />
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    {items.map((user) => (
+                    {users.map((user) => (
                         <tr key={rowKeyForUser(user)} onClick={() => getInformation(user)}>
                             <td>{user.id}</td>
                             <td>{user.firstName}</td>
