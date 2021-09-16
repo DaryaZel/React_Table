@@ -21,15 +21,19 @@ function App() {
     const json = await response.json()
     setUsers(json)
   }, []);
-  const lastUserIndex = currentPageNumber * pageSize
-  const firstUserIndex = lastUserIndex - pageSize
   const filteredUsers = search(users, { searchValue, selectedState })
   const sortedUsers = sort(filteredUsers, sortValue)
+  const lastUserIndex = currentPageNumber * pageSize
+  const firstUserIndex = lastUserIndex - pageSize
   const currentUsersArray = sortedUsers.slice(firstUserIndex, lastUserIndex)
   const changePage = pageNumber => setCurrentPageNumber(pageNumber)
   const prevPage = () => currentPageNumber != 1 ? setCurrentPageNumber(prev => prev - 1) : undefined
   const nextPage = () => currentPageNumber != Math.ceil(filteredUsers.length / pageSize) ? setCurrentPageNumber(prev => prev + 1) : undefined
   const getInformation = information => setAddInformation(information)
+  if (filteredUsers.length > 0 && currentPageNumber > Math.ceil(filteredUsers.length / pageSize)) {
+    setCurrentPageNumber(Math.ceil(filteredUsers.length / pageSize))
+  }
+
   return (
     <div className='main-container'>
       <div className='filters-container'>
@@ -56,5 +60,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
